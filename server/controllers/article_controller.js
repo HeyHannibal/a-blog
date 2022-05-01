@@ -8,7 +8,7 @@ exports.article_list = function (req, res, next) {
         .sort({ date: 1 })
         .exec((err, article_list) => {
             if (err) { return next(err) }
-            res.json(article_list)
+            res.json(JSON.stringify(article_list))
         })
 }
 

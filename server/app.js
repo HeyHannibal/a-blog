@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var async = require('async')
 var mongoose = require('mongoose');
+const cors = require('cors');
+
 var mongoDB = process.env.mongoURL
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -24,6 +26,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
+app.use(cors())
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // if true, body with the message's text is accessible in the request whether it is send by a regular POST request or a POST request from a HTML form. 
 app.use(cookieParser());
