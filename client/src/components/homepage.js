@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import uniqid from 'uniqid';
+import { Link } from "react-router-dom";
 
 
 export default function Homepage(props) {
@@ -22,9 +23,9 @@ export default function Homepage(props) {
         <div>
             <ul>
                {articles ? articles.map((article) => 
-                <li key={uniqid()}><a href={article.url}>{article.title}</a></li>
+                <li key={uniqid()}><Link to={article.url}>{article.title}</Link></li>
                ) :
-                'loading'}
+                'Loading articles'}
             </ul>
         </div>
     )
