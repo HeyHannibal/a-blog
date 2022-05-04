@@ -3,15 +3,10 @@ import React, { useState, useEffect } from 'react'
 export default function PostComment(props) {
 
     const [inputUsername, setInputUsername] = useState('')
-    const usernameChange = (event) => {
-        console.log(inputUsername)
-        setInputUsername(event.target.value)
-    }
+    const usernameChange = (event) => setInputUsername(event.target.value)
     const [inputCommentBody, setInputCommentBody] = useState('')
-    const commentBodyChange = (event) => {
-        console.log(inputUsername)
-        setInputCommentBody(event.target.value)
-    }
+    const commentBodyChange = (event) => setInputCommentBody(event.target.value)
+    const [errorMessage, setErrorMessage] = useState(false)
 
     async function post(e) {
         e.preventDefault();
@@ -30,7 +25,7 @@ export default function PostComment(props) {
             })
             if (res.status === 200) {
                 window.location.reload()      
-                  } else setInputCommentBody('failed! once again. Who could`ve predicted that. EVERYBODY!')
+                  } else setErrorMessage(`An error has occured, please try again - ${res.status}`)
         } catch (err) {
             console.log(err)
         }
@@ -39,6 +34,7 @@ export default function PostComment(props) {
 
     return (
         <form onSubmit={post}>
+            {errorMessage ? <p>{errorMessage}</p> : null}
             <label htmlFor='username'>
                 Username
                 <input type='text' name='username' value={inputUsername} onChange={usernameChange}></input>

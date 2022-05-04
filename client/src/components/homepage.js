@@ -9,7 +9,6 @@ export default function Homepage(props) {
 
 
     useEffect(() => {
-        console.log('used effect')
         if(!articles) {fetch('http://localhost:3001/')
             .then(result => result.json())
             .then(result => setArticles(JSON.parse(result)))

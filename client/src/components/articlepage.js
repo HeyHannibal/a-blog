@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import PostComment from './postcomment'
+import uniqid from 'uniqid';
 
 export default function ArticlePage() {
 
@@ -24,7 +25,7 @@ export default function ArticlePage() {
                     <p>{article.article.body}</p>
                     <PostComment articleId={articleId}/>
                     {article.comments.map(comment =>
-                        <div>
+                        <div key={uniqid()}>
                             <h5>{comment.username}</h5>
                             <p>{comment.body}</p>
                         </div>

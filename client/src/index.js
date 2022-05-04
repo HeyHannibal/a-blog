@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from "react-dom";
+import { createRoot } from 'react-dom/client';
+
 import {
   BrowserRouter,
   Routes,
@@ -11,14 +12,15 @@ import Homepage from './components/homepage';
 import './stylesheets/index.css';
 
 const rootElement = document.getElementById("root");
-render(
+const root = createRoot(rootElement)
+root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} >
-        <Route index element={<Homepage />}/>
+        <Route index element={<Homepage />} />
         <Route path="article/:id" element={<ArticlePage />} />
-        
+
       </Route>
     </Routes>
   </BrowserRouter>
-  , rootElement);
+);
