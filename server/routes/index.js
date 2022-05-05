@@ -8,7 +8,7 @@ router.get('/', article_controller.article_list)
 
 router.get('/article/:articleId', article_controller.article_detail)
 
-router.post('/article', article_controller.article_new_post)
+//router.post('/article', article_controller.article_new_post)
 
 router.post('/article/:articleId/comment', comment_controller.comment_post)
 

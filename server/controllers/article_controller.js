@@ -1,4 +1,5 @@
 var async = require('async')
+const jwt = require('jsonwebtoken')
 
 const Article = require('../models/article')
 const Comment = require('../models/comment')
@@ -30,18 +31,27 @@ exports.article_detail = function(req,res,next) {
 }
 
 exports.article_new_post = function(req, res, next) {
-    const article = new Article({
-        title: req.body.title,
-        body: req.body.body,
+    //jwt.verify(req.token, 'secret_key', (err, authData) => {
+        // if(err) {
+        //     res.sendStatus(403);
+        // } else {
+            const article = new Article({
+                title: req.body.title,
+                body: req.body.body,
+        
+            })
+            article.save(function(err) {
+                if (err) { return next(err) };
+                res.json('article created!')
+            })
+        }
 
-    })
-    article.save(function(err) {
-        if (err) { return next(err) };
-        res.redirect('/')
-    })
-}
+
+
 
 // post article
 // curl -X POST -H "Content-Type:application/json" http://localhost:3000/article/ -d '{"title":"It works!", "body":"heheheh"}'
 // post comment
 // curl -X POST -H "Content-Type:application/json" http://localhost:3000/article/626bed2ac4fa1d72c6c405d7/comment/ -d '{"username":"baked potato", "body":"i'm baked"}'
+// post login 
+// curl -X POST -H "Content-Type:application/json" http://localhost:3001/cms/login '
