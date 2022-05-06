@@ -1,6 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const jwt = require('jsonwebtoken')
+
+require('dotenv').config()
+
 
 const User = require('../models/user')
 const article_controller = require('../controllers/article_controller')
@@ -39,7 +42,7 @@ router.post('/login', (req, res) => {
         else {
             const options = {}
             options.expiresIn = 60;
-            const secret = 'not_so_secret_key';
+            const secret = process.env.secretKey;
             const token = jwt.sign({ user }, secret, options)
             res.status(200).json({
                 message: 'Auth passed',
@@ -54,16 +57,21 @@ router.post('/article', verifyToken, article_controller.article_new_post)
 
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization']
-    console.log(bearerHeader)
     if (typeof bearerHeader !== 'undefined') {
         const token = bearerHeader.split(' ')[1]
-        console.log(token)
-        req.token = token
-        next()
+        jwt.verify(token, process.env.secretKey, (err, decoded) => {
+            if (err) return res.sendStatus(403);
+            req.token = token
+            next()
+        })
     } else {
         res.sendStatus(403)
     }
 }
+
+router.delete('/article', article_controller.article_delete)
+
+
 
 module.exports = router;
 

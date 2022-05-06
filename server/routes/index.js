@@ -4,7 +4,7 @@ const article_controller = require('../controllers/article_controller')
 const comment_controller = require('../controllers/comment_controller')
 
 
-router.get('/', article_controller.article_list)
+router.get('/article', article_controller.article_list)
 
 router.get('/article/:articleId', article_controller.article_detail)
 
