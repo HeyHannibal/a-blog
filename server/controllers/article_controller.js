@@ -43,9 +43,9 @@ exports.article_new_post = function (req, res, next) {
 }
 
 exports.article_delete = function (req, res, next) {
-    Article.deleteOne({_id: req.articleId}, (err , res) => {
+    Article.deleteOne({_id: req.params.articleId}, (err , result) => {
         if(err) {return next(err)}
-        res.json({'message' : res})
+        res.json('successfully deleted!')
     })
 }
 

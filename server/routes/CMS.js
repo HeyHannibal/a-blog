@@ -8,7 +8,6 @@ require('dotenv').config()
 const User = require('../models/user')
 const article_controller = require('../controllers/article_controller')
 
-/* GET users listing. */
 router.get('/', function (req, res, next) {
     res.json('log in to use CMS');
 });
@@ -69,7 +68,7 @@ function verifyToken(req, res, next) {
     }
 }
 
-router.delete('/article', article_controller.article_delete)
+router.delete('/article/:articleId', article_controller.article_delete)
 
 
 
