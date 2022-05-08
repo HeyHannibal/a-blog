@@ -1,5 +1,4 @@
 var async = require('async')
-const jwt = require('jsonwebtoken')
 
 const Article = require('../models/article')
 const Comment = require('../models/comment')

@@ -1,15 +1,44 @@
 var express = require('express');
 var router = express.Router();
+const jwt = require('jsonwebtoken')
+
+require('dotenv').config()
+
 const article_controller = require('../controllers/article_controller')
 const comment_controller = require('../controllers/comment_controller')
-
+const auth_controller = require('../controllers/auth_controller')
 
 router.get('/article', article_controller.article_list)
 
 router.get('/article/:articleId', article_controller.article_detail)
 
-//router.post('/article', article_controller.article_new_post)
+router.post('/article', verifyToken, article_controller.article_new_post)
+
+router.delete('/article/:articleId', verifyToken, article_controller.article_delete)
 
 router.post('/article/:articleId/comment', comment_controller.comment_post)
+
+
+
+function verifyToken(req, res, next) {
+    const bearerHeader = req.headers['authorization']
+    if (typeof bearerHeader !== 'undefined') {
+        const token = bearerHeader.split(' ')[1]
+        jwt.verify(token, process.env.secretKey, (err, decoded) => {
+            if (err) return res.sendStatus(403);
+            req.token = token
+            next()
+        })
+    } else {
+        res.sendStatus(403)
+    }
+}
+
+router.post('/auth/sign-up', auth_controller.sing_up)
+
+
+router.post('/auth/login', auth_controller.login)
+
+
 
 module.exports = router;
