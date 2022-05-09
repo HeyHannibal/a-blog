@@ -3,7 +3,6 @@ var async = require('async')
 const Article = require('../models/article')
 const Comment = require('../models/comment')
 exports.article_list = function (req, res, next) {
-
     Article.find({})
         .sort({ date: 1 })
         .exec((err, article_list) => {

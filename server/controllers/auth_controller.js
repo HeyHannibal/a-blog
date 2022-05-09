@@ -18,20 +18,25 @@ exports.sing_up = function (req, res, next) {
 exports.login = function (req, res, next) {
     User.findOne({ username: req.body.username }, (err, user) => {
         if (err) {
-            res.redirect('./')
+            res.sendStatus(403)
+            console.log('this');
+
         }
         if (!user) {
-            res.json({ message: "Incorrect username" });
-        }
-        if (!req.body.password || user.password !== req.body.password) {
+            res.sendStatus(403)
+            console.log('this');
 
-            res.json({ message: "Incorrect password" });
+        }
+        else if (!req.body.password || user.password !== req.body.password) {
+            console.log('this');
+            res.sendStatus(403)
         }
         else {
-            const options = {}
-            options.expiresIn = 60 * 60;
+             const options = {}
+            options.expiresIn = 100 * 100;
             const secret = process.env.secretKey;
             const token = jwt.sign({ user }, secret, options)
+            console.log(token);
             res.status(200).json({
                 message: 'Auth passed',
                 token
