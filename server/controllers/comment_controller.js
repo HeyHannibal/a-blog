@@ -1,3 +1,4 @@
+const { sendStatus } = require('express/lib/response')
 const Comment = require('../models/comment')
 
 exports.comment_post = function(req, res, next) {
@@ -9,7 +10,15 @@ exports.comment_post = function(req, res, next) {
     })
     comment.save(function(err) {
         if(err) { return next(err)}; 
-        //res.redirect('/')
         res.json(comment)
+    })
+}
+
+exports.comment_delete = function (req, res, next) {
+    Comment.deleteOne({_id: req.params.commentId}, (err , result) => {
+        if(err) {
+            res.sendStatus(404)
+        }
+        res.sendStatus(200)
     })
 }

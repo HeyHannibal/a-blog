@@ -18,6 +18,7 @@ router.delete('/article/:articleId', verifyToken, article_controller.article_del
 
 router.post('/article/:articleId/comment', comment_controller.comment_post)
 
+router.delete('/article/:articleId/comment/:commentId', comment_controller.comment_delete)
 
 
 function verifyToken(req, res, next) {
