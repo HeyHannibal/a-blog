@@ -1,47 +1,49 @@
 const express = require('express');
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
-
+const bcrypt = require('bcryptjs')
 exports.sing_up = function (req, res, next) {
-    const user = new User({
-        username: req.body.username,
-        password: req.body.password,
-    }).save(err => {
-        if (err) {
-            return next(err);
-        }
-        console.log('succsess')
-        res.redirect("/");
+    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+        if (err) { next(err) }
+        const user = new User({
+            username: req.body.username,
+            password: hashedPassword,
+        }).save(err => {
+            if (err) {
+                return next(err);
+            }
+            console.log('succsess')
+            res.sendStatus(200);
+        });
     });
+
 }
 
 exports.login = function (req, res, next) {
     User.findOne({ username: req.body.username }, (err, user) => {
         if (err) {
             res.sendStatus(403)
-            console.log('this');
 
         }
         if (!user) {
             res.sendStatus(403)
-            console.log('this');
-
         }
-        else if (!req.body.password || user.password !== req.body.password) {
-            console.log('this');
-            res.sendStatus(403)
-        }
-        else {
-             const options = {}
+        bcrypt.compare(req.body.password, user.password, (err, response) => {
+            if (response) {
+            const options = {}
             options.expiresIn = 100 * 100;
             const secret = process.env.secretKey;
             const token = jwt.sign({ user }, secret, options)
-            console.log(token);
-            res.status(200).json({
+            res.json({
                 message: 'Auth passed',
                 token
             })
-        }
+            } else {
+                // passwords do not match
+                return res.sendStatus(403)
+            }
+        }) 
     })
 }
-
+// LOGIN
+// curl -X POST -H "Content-Type:application/json" http://localhost:3001/auth/sign-up -d '{"username":"ffffff", "password":"ffffff"}'
