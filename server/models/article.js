@@ -8,6 +8,7 @@ var ArticleSchema = new Schema(
         title: { type: String, required: true },
         body: { type: String, required: true },
         date: { type: Date, default: Date.now },
+        published: {type: Boolean, default: true}
 
     }, { toJSON: { virtuals: true } });
 
