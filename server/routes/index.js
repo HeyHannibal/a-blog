@@ -16,7 +16,7 @@ router.post('/article', verifyToken, article_controller.article_new_post)
 
 router.delete('/article/:articleId', verifyToken, article_controller.article_delete)
 
-router.put('./article/:articleId', verifyToken, article_controller.article_pub)
+router.put('/article/:articleId', verifyToken, article_controller.article_pub)
 
 router.post('/article/:articleId/comment', comment_controller.comment_post)
 
@@ -38,6 +38,7 @@ function verifyToken(req, res, next) {
             next()
         })
     } else {
+        console.log('failed auth');
         res.sendStatus(403)
     }
 }
