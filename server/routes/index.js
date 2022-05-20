@@ -14,11 +14,11 @@ router.get('/article', verifyPriveleges, article_controller.article_list)
 
 router.get('/article/:articleId', article_controller.article_detail)
 
-router.post('/article', verifyToken, article_controller.article_new_post)
+router.post('/article', verifyToken, article_controller.post_article)
 
-router.delete('/article/:articleId', verifyToken, article_controller.article_delete)
+router.delete('/article/:articleId', verifyToken, article_controller.delete_article)
 
-router.put('/article/:articleId', verifyToken, article_controller.article_pub)
+router.put('/article/:articleId', verifyToken, article_controller.publish_article)
 
 // Comment Routes
 router.post('/article/:articleId/comment', comment_controller.comment_post)

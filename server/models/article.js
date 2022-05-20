@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 
 var ArticleSchema = new Schema(
     {
-        title: { type: String, required: true },
-        body: { type: String, required: true },
+        title: { type: String, required: true, minlength: 3},
+        body: { type: String, required: true, minlength: 10 },
         date: { type: Date, default: Date.now },
         published: {type: Boolean, default: true}
 

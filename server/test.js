@@ -7,7 +7,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use("/", index);
 
-const request = supertest("http://localhost:3001")
+const request = supertest("http://localhost:3001");
 
 request
   .get("/article")
@@ -15,26 +15,25 @@ request
   .expect(200)
   .end((err, res) => {
     if (err) throw err;
-    let response = JSON.parse(res.body)
+    let response = JSON.parse(res.body);
     console.log(response);
   });
 
-
 request
   .post("/auth/login")
-  .send({'username':'ffffff', 'password': 'ffffff'})
+  .send({ username: "ffffff", password: "ffffff" })
   .expect(200)
   .expect("Content-Type", /json/)
   .end((err, res) => {
-      if(err) throw err;
-      console.log(res.body);
-  })
+    if (err) throw err;
+    console.log(res.body);
+  });
 
 request
-.post("/auth/login")
-.send(JSON.stringify({'username':'fff'}))
-.expect(403)
-.end((err, res) => {
-    if(err) throw err;
+  .post("/auth/login")
+  .send(JSON.stringify({ username: "fff" }))
+  .expect(403)
+  .end((err, res) => {
+    if (err) throw err;
     console.log(res.body);
-})
+  });
