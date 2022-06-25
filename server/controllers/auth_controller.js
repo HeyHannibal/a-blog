@@ -2,6 +2,8 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+const { body, validationResult } = require("express-validator");
+
 exports.sing_up = function (req, res, next) {
   bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
     if (err) {

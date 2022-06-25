@@ -2,32 +2,30 @@ const Comment = require("../models/comment");
 const { body, validationResult } = require("express-validator");
 
 exports.comment_post = [
-  body("username", "username error").trim().default('anonymous').escape(),
+  body("username", "username error").trim().default("anonymous").escape(),
   body("body", "body error").trim().isLength({ min: 3 }).escape(),
 
   function (req, res, next) {
-
-    const errors = validationResult(req)
+    const errors = validationResult(req);
     console.log(req.body.username.length);
-  const comment = new Comment({
-    username: req.body.username,
-    body: req.body.body,
-    article: req.params.articleId,
-  });
+    const comment = new Comment({
+      username: req.body.username,
+      body: req.body.body,
+      article: req.params.articleId,
+    });
 
-  if(!errors.isEmpty()) {
-    console.log('aa');
-    res.sendStatus(400)
-  }
-
-  comment.save(function (err) {
-    console.log('eeee');
-    if (err) {
-      return next(err);
+    if (!errors.isEmpty()) {
+      res.sendStatus(400);
     }
-    res.json(comment);
-  });
-}]
+
+    comment.save(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.json(comment);
+    });
+  },
+];
 
 exports.comment_delete = function (req, res, next) {
   Comment.deleteOne({ _id: req.params.commentId }, (err, result) => {

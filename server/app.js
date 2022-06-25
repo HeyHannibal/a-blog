@@ -7,6 +7,9 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const request = require("supertest");
 const cors = require("cors");
+const compression = require('compression')
+const helmet = require('helmet');
+
 
 const mongoDB = process.env.mongoURL;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -16,6 +19,8 @@ const db = mongoose.connection;
 const indexRouter = require("./routes/index");
 
 const app = express();
+app.use(compression());
+app.use(helmet());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
