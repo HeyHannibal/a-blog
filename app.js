@@ -8,6 +8,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const request = require("supertest");
 const cors = require("cors");
+const supertest = require("supertest");
 
 const mongoDB = process.env.mongoURL;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
