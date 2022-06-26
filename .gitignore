@@ -1,2 +1,2 @@
-/CMS
-/bin
+/node_modules
+.env

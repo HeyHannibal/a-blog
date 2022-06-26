@@ -32,7 +32,7 @@ exports.login = function (req, res, next) {
         if (response) {
           const options = {};
           options.expiresIn = 100 * 100;
-          const secret = process.env.secretKey;
+          const secret = process.env.key;
           const token = jwt.sign({ user }, secret, options);
           res.json({
             message: "Auth passed",

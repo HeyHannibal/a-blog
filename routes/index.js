@@ -34,7 +34,7 @@ function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization']
     if (typeof bearerHeader !== 'undefined') {
         const token = bearerHeader.split(' ')[1]
-        jwt.verify(token, process.env.secretKey, (err, decoded) => {
+        jwt.verify(token,process.env.key, (err, decoded) => {
             if (err) return res.sendStatus(403);
             req.token = token
             next()
@@ -47,7 +47,7 @@ function verifyPriveleges(req, res, next) {
     const bearerHeader = req.headers['authorization']
     if (typeof bearerHeader !== 'undefined') {
         const token = bearerHeader.split(' ')[1]
-        jwt.verify(token, process.env.secretKey, (err, decoded) => {
+        jwt.verify(token, process.env.key, (err, decoded) => {
             if (err) {
                 req.hasAccess = false
                 next(err)
