@@ -10,6 +10,10 @@ const auth_controller = require('../controllers/auth_controller')
 
 
 // Article Routes
+router.get('/', function (req, res, next) {
+    res.end('HI!')
+} )
+
 router.get('/article', verifyPriveleges, article_controller.article_list)
 
 router.get('/article/:articleId', article_controller.article_detail)
