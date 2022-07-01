@@ -2,8 +2,8 @@ const Comment = require("../models/comment");
 const { body, validationResult } = require("express-validator");
 
 exports.comment_post = [
-  body("username", "username error").trim().default('anonymous').escape(),
-  body("body", "body error").trim().isLength({ min: 3 }).escape(),
+  body("username", "username error").trim().default('anonymous'),
+  body("body", "body error").trim().isLength({ min: 3 }),
 
   function (req, res, next) {
 
@@ -16,7 +16,6 @@ exports.comment_post = [
   });
 
   if(!errors.isEmpty()) {
-    console.log('aa');
     res.sendStatus(400)
   }
 

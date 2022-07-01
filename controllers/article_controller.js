@@ -34,8 +34,8 @@ exports.article_detail = function (req, res, next) {
 };
 
 exports.post_article = [
-  body("title", "Title error").trim().isLength({ min: 3 }).escape(),
-  body("body", "Article error").trim().isLength({ min: 15 }).escape(),
+  body("title", "Title error").trim().isLength({ min: 3 }),
+  body("body", "Article error").trim().isLength({ min: 15 }),
   function (req, res, next) {
     const errors = validationResult(req);
     const article = new Article({
